@@ -1,0 +1,40 @@
+workspace: .
+manifestPath: .docsynchub/manifest.json
+
+git:
+  provider: local
+  commit:
+    enabled: true
+    message: "docs: sync product documents"
+    branch: docsync/update-docs
+    push: false
+
+notifications:
+  telegram:
+    enabled: false
+    botTokenEnv: TELEGRAM_BOT_TOKEN
+    chatIdEnv: TELEGRAM_CHAT_ID
+  discord:
+    enabled: false
+    webhookUrlEnv: DISCORD_WEBHOOK_URL
+
+mappings:
+  - id: prd-google-doc
+    source:
+      type: google_doc
+      id: "google-doc-file-id"
+      accessTokenEnv: GOOGLE_ACCESS_TOKEN
+    output: docs/prd/project.md
+
+  - id: api-lark-doc
+    source:
+      type: lark_doc
+      id: "lark-document-id"
+      tenantAccessTokenEnv: LARK_TENANT_ACCESS_TOKEN
+    output: docs/api/auth.md
+
+  - id: local-prd
+    source:
+      type: local_file
+      path: instruction.md
+    output: docs/prd/local.md

@@ -1,0 +1,269 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 20% 98%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 214 32% 91%;
+    --secondary-foreground: 222 47% 11%;
+    --muted: 214 32% 91%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 214 32% 91%;
+    --accent-foreground: 222 47% 11%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 221 83% 53%;
+    --radius: 0.5rem;
+    --sidebar: 222 47% 11%;
+    --sidebar-foreground: 215 20% 65%;
+    --sidebar-active: 217 33% 17%;
+    --sidebar-active-foreground: 0 0% 100%;
+  }
+}
+
+@layer base {
+  * { @apply border-border box-border; }
+  body { @apply bg-background text-foreground m-0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+}
+
+/* --- Auth screens --- */
+.auth, .splash { min-height: 100vh; display: grid; place-items: center; }
+.splash { @apply text-muted-foreground; }
+.auth-card { width: 380px; @apply bg-card border border-border rounded-xl p-8 flex flex-col gap-5 shadow-sm; }
+.auth-card b { @apply text-lg font-bold text-foreground; }
+.auth-card h1 { @apply text-2xl font-semibold m-0; }
+.auth-card .error { @apply text-destructive text-sm; }
+
+/* --- App shell --- */
+.app { min-height: 100vh; display: grid; grid-template-columns: 240px 1fr; }
+
+aside {
+  background: hsl(var(--sidebar));
+  color: hsl(var(--sidebar-foreground));
+  @apply flex flex-col gap-2 p-4 overflow-y-auto;
+  position: sticky; top: 0; height: 100vh;
+}
+.sidebar-logo {
+  @apply flex items-center gap-2 px-3 py-2 mb-3 text-white font-bold text-base;
+}
+.sidebar-logo svg { @apply text-primary; }
+
+aside nav { @apply flex flex-col gap-1; }
+aside nav a {
+  @apply flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium cursor-pointer no-underline transition-colors;
+  color: hsl(var(--sidebar-foreground));
+}
+aside nav a:hover { background: hsl(var(--sidebar-active)); color: white; }
+aside nav a.active {
+  background: hsl(var(--sidebar-active));
+  color: hsl(var(--sidebar-active-foreground));
+}
+aside nav a svg { @apply opacity-70; }
+aside nav a.active svg { @apply opacity-100; }
+
+.sidebar-footer { @apply mt-auto pt-4; }
+
+.main { @apply p-6 flex flex-col gap-5 min-h-screen; background: hsl(var(--background)); }
+
+/* --- Page header --- */
+.page-header {
+  @apply flex items-start justify-between mb-1;
+}
+.page-header h1 { @apply text-2xl font-semibold m-0 text-foreground; }
+.page-header p { @apply text-sm text-muted-foreground mt-1; }
+
+/* --- Metrics --- */
+.metrics { @apply grid gap-4; grid-template-columns: repeat(4, 1fr); }
+.metric { @apply bg-card border border-border rounded-xl p-5; }
+.metric span { @apply block text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1; }
+.metric b { @apply text-3xl font-bold text-foreground; }
+
+/* --- Tabs --- */
+.tabs {
+  @apply flex gap-1 border-b border-border;
+}
+.tabs button {
+  @apply bg-transparent border-0 px-4 py-2.5 text-sm font-medium text-muted-foreground cursor-pointer rounded-t-md transition-colors;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+.tabs button:hover { @apply text-foreground; }
+.tabs button.active { @apply text-primary; border-bottom-color: hsl(var(--primary)); }
+
+/* --- Panel / Card --- */
+.panel { @apply bg-card border border-border rounded-xl p-5; }
+
+/* --- Form elements --- */
+label span, .label { @apply block text-sm font-medium text-foreground mb-1.5; }
+input, select {
+  @apply w-full h-10 border border-input rounded-md px-3 text-sm bg-background text-foreground transition-colors;
+  font: inherit;
+}
+input:focus, select:focus {
+  @apply outline-none ring-2 ring-ring border-transparent;
+}
+input::placeholder { @apply text-muted-foreground; }
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+.hint { @apply block text-xs text-muted-foreground mt-1; }
+
+/* --- Form layouts --- */
+.stack-form { @apply flex flex-col gap-5; }
+.form { @apply grid gap-3 items-end; }
+.form.two { grid-template-columns: 1fr 1fr; }
+.form.two-wide { grid-template-columns: 1fr 1fr; }
+.form.three { grid-template-columns: 1fr 1fr 1fr; }
+.form.four { grid-template-columns: 1fr 1fr 1fr 1fr auto; }
+.mini-form { @apply grid gap-3; grid-template-columns: repeat(3, 1fr); }
+.fit { width: max-content; }
+
+/* --- Old button (for non-Shadcn areas) --- */
+button.primary-btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-md text-sm font-semibold h-9 px-4 cursor-pointer transition-colors;
+  @apply bg-primary text-primary-foreground border-0;
+}
+button.primary-btn:hover { @apply opacity-90; }
+button.secondary-btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-md text-sm font-semibold h-9 px-4 cursor-pointer transition-colors;
+  @apply bg-transparent text-primary border border-primary;
+}
+button.danger-btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-md text-sm font-semibold h-9 px-4 cursor-pointer transition-colors;
+  @apply bg-transparent text-destructive border border-destructive/30;
+}
+button.link-btn {
+  @apply bg-transparent text-primary border-0 text-sm font-medium cursor-pointer p-0 h-auto;
+}
+button:disabled { @apply opacity-50 cursor-not-allowed; }
+
+/* --- Projects table --- */
+.project-table { @apply bg-card border border-border rounded-xl overflow-hidden; }
+.data-toolbar {
+  @apply flex items-center justify-between px-4 h-14 border-b border-border;
+}
+.data-toolbar b { @apply text-sm font-semibold; }
+.data-toolbar input { @apply w-64 h-9; }
+.project-head {
+  @apply grid text-xs font-semibold uppercase tracking-wide text-muted-foreground px-4 py-3;
+  grid-template-columns: minmax(200px, 1.5fr) 0.7fr 0.6fr 0.6fr 0.7fr auto;
+  gap: 16px; align-items: center;
+  background: hsl(var(--muted));
+}
+.project-row {
+  @apply grid px-4 py-3 border-t border-border items-center transition-colors;
+  grid-template-columns: minmax(200px, 1.5fr) 0.7fr 0.6fr 0.6fr 0.7fr auto;
+  gap: 16px;
+}
+.project-row:hover { @apply bg-muted/50; }
+.project-row small { @apply block text-xs text-muted-foreground mt-0.5; }
+.primary-link, .text-link { @apply text-primary no-underline text-sm font-semibold; }
+.primary-link:hover, .text-link:hover { @apply underline; }
+.caps { @apply capitalize; }
+.status { @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold; }
+.status.ready { @apply bg-blue-50 text-blue-600; }
+.status.empty { @apply bg-slate-100 text-slate-500; }
+.status.success { @apply bg-green-50 text-green-700; }
+.status.failed { @apply bg-red-50 text-red-600; }
+.empty-row { @apply px-4 py-8 text-sm text-center text-muted-foreground; }
+.actions { @apply flex items-center gap-2; }
+
+/* --- Segmented control --- */
+.segmented {
+  @apply flex bg-muted rounded-lg p-1 gap-1 self-end;
+}
+.segmented button {
+  @apply flex-1 text-xs font-medium text-muted-foreground rounded-md px-3 py-1.5 capitalize transition-colors border-0 cursor-pointer;
+  background: transparent;
+}
+.segmented button.active { @apply bg-card text-primary shadow-sm; }
+
+/* --- Notification channel editor --- */
+.check { @apply flex items-center gap-2; }
+.check input { @apply w-4 h-4; }
+.check b { @apply text-sm font-medium; }
+.switch { @apply pt-6; }
+.channel-editor { @apply border border-border rounded-xl p-4 flex flex-col gap-3; }
+.channel-editor h3 { @apply m-0 text-base font-semibold; }
+.enabled-list { @apply flex gap-2 flex-wrap; }
+.enabled-list span { @apply bg-blue-50 text-blue-600 rounded-full px-3 py-1 text-xs font-semibold; }
+
+/* --- Integration bar --- */
+.integration-bar { @apply flex items-center gap-3; }
+.ok { @apply text-green-700 bg-green-50 rounded-full px-2.5 py-0.5 text-xs font-semibold; }
+
+/* --- Google Drive Picker Dialog --- */
+.dialog-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.5); backdrop-filter: blur(4px); z-index: 50; }
+.dialog-content {
+  position: fixed; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(720px, calc(100vw - 32px));
+  max-height: min(720px, calc(100vh - 32px));
+  @apply bg-card border border-border rounded-xl shadow-2xl flex flex-col overflow-hidden;
+  z-index: 51;
+}
+.dialog-head { @apply flex justify-between items-start gap-4 p-5 border-b border-border; }
+.dialog-head h2 { @apply m-0 text-lg font-semibold text-foreground; }
+.dialog-head p { @apply m-0 text-sm text-muted-foreground; }
+.icon-button {
+  @apply w-8 h-8 p-0 flex items-center justify-center rounded-md cursor-pointer transition-colors;
+  @apply bg-transparent text-muted-foreground border border-transparent;
+}
+.icon-button:hover { @apply bg-muted; }
+.breadcrumbs { @apply flex items-center gap-1 px-4 py-2 border-b border-border overflow-auto; }
+.breadcrumbs button {
+  @apply flex items-center gap-1 bg-transparent text-primary border-0 text-sm px-2 py-1 rounded cursor-pointer whitespace-nowrap;
+}
+.breadcrumbs button:hover { @apply bg-muted; }
+.search-toolbar { @apply px-4 py-3 border-b border-border; }
+.search-toolbar input { @apply w-full h-9; }
+.drive-list { @apply flex-1 overflow-auto p-2; min-height: 260px; }
+.drive-row {
+  @apply w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-left cursor-pointer transition-colors;
+  background: transparent; border: 0;
+}
+.drive-row:hover { @apply bg-muted; }
+.drive-row svg:first-child { @apply text-primary opacity-70; }
+.drive-row span { @apply flex-1 font-medium text-foreground truncate; }
+.drive-row small { @apply text-xs text-muted-foreground; }
+.drive-row.doc svg:first-child { @apply text-blue-500; }
+
+/* --- Settings --- */
+.settings-layout { @apply grid gap-5; grid-template-columns: 180px 1fr; }
+.subnav { @apply bg-card border border-border rounded-xl p-3 flex flex-col gap-1 self-start; }
+.subnav b { @apply text-xs font-semibold uppercase tracking-wide text-muted-foreground px-3 py-1 block; }
+.subnav span { @apply px-3 py-2 rounded-lg text-sm cursor-pointer block; }
+.subnav .active { @apply bg-blue-50 text-primary font-semibold; }
+.panel h3 { @apply m-0 text-base font-semibold; }
+
+/* --- Auth --- */
+.error { @apply text-destructive text-sm; }
+
+/* --- Callout --- */
+.callout { @apply rounded-lg px-3 py-2.5 text-sm; }
+.error-callout { @apply bg-red-50 text-red-700 border border-red-200; }
+
+@media (max-width: 900px) {
+  .app { grid-template-columns: 1fr; }
+  aside { display: none; }
+  .metrics, .form, .form.two, .form.two-wide, .form.three, .form.four, .mini-form { grid-template-columns: 1fr; }
+  .project-head { display: none; }
+  .project-row { grid-template-columns: 1fr auto; }
+  .settings-layout { grid-template-columns: 1fr; }
+  .data-toolbar { flex-direction: column; height: auto; gap: 10px; padding: 12px; align-items: stretch; }
+  .data-toolbar input { width: 100%; }
+}

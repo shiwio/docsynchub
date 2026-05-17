@@ -1,0 +1,17 @@
+workspace: .
+manifestPath: .docsynchub/manifest.json
+
+git:
+  provider: none
+  commit:
+    enabled: false
+    message: "docs: sync product documents"
+
+notifications: {}
+
+mappings:
+  - id: local-prd
+    source:
+      type: local_file
+      path: instruction.md
+    output: docs/prd/local.md
