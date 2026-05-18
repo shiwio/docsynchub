@@ -9,8 +9,7 @@
   },
   "files": [
     "dist",
-    "README.md",
-    "examples"
+    "README.md"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json && vite build",

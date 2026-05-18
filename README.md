@@ -121,6 +121,11 @@ services:
       POSTGRES_DB: docsynchub
       POSTGRES_USER: docsynchub
       POSTGRES_PASSWORD: docsynchub
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U docsynchub -d docsynchub"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -128,11 +133,11 @@ services:
     image: ghcr.io/your-org/docsynchub:latest
     ports:
       - "8080:8080"
+    environment:
+      DATABASE_URL: postgresql://docsynchub:docsynchub@postgres:5432/docsynchub
     depends_on:
       postgres:
         condition: service_healthy
-    environment:
-      DATABASE_URL: postgresql://docsynchub:docsynchub@postgres:5432/docsynchub
 
 volumes:
   postgres_data:
